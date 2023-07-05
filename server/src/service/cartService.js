@@ -30,7 +30,7 @@ const addto_cart = async (Userid, newBook) => {
       }
       Cart["Books"].push({
         id: newBook["Bookid"],
-        Quantity: newBook["quantity"],
+        quantity: newBook["quantity"],
       });
       if (await CartDb.update_cart_data(Cart)) {
         console.log("data added to cart");
@@ -58,11 +58,11 @@ const addto_cart = async (Userid, newBook) => {
   }
 };
 const cart_info = {
-  Bookid: "64a51471b7c9070a2ebc1b7f",
+  Bookid: "64a513f244a8b115b49c6e8a",
   quantity: 2,
 };
 
-// addto_cart("64a4ef061ac5ca513ce09d04" , cart_info);
+addto_cart("64a4ef061ac5ca513ce09d04" , cart_info);
 
 const update_cart_quantity = async (userid, data) => {
     try {

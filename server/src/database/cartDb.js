@@ -114,7 +114,7 @@ async function get_cart_data (){
   
   async function deactive_cart(user_id){
     try{
-      let con = await db_connect('cart');
+      let con = await db_connect('carts');
       let cart = await con.findOne({UserId: user_id, status:"active"});
    if(cart){
     let res = await con.updateOne({_id: new mongodb.ObjectId(cart._id)} , {$set : {status:"deactive"}})
