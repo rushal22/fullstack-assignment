@@ -3,6 +3,23 @@ const UserDb = require("../database/userDb");
 const BookDb = require("../database/bookDb");
 const Schema = require("../models/cartModel");
 
+
+
+const get_cart_by_id = async (id) => {
+  try {
+    const carts = await CartDb.get_active_cart_data(id);
+    if (carts) {
+      return carts;
+    } else {
+      return {
+        message: "no product found",
+      };
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
 const addto_cart = async (Userid, newBook) => {
   try {
     //assuming customer already have cart created
@@ -62,38 +79,43 @@ const cart_info = {
   quantity: 2,
 };
 
-addto_cart("64a4ef061ac5ca513ce09d04" , cart_info);
+addto_cart("64a4ef061ac5ca513ce09d04", cart_info);
 
 const update_cart_quantity = async (userid, data) => {
-    try {
-      const res = await CartDb.update_quantity_from_cart(userid, data);
-      console.log(res)
-      if (res) {
-        console.log("Quantity updated succesfully");
-        return "Quantity updated succesfully" 
-      }
-    //   throw new Error ("no book found for id:" + bookid);
-    } catch (e) {
-      console.log(e.message);
-      throw e
+  try {
+    const res = await CartDb.update_quantity_from_cart(userid, data);
+    console.log(res);
+    if (res) {
+      console.log("Quantity updated succesfully");
+      return "Quantity updated succesfully";
     }
-  };
-  const data = {bookid : "64a513f244a8b115b49c6e8a" , quantity : 2}
+    //   throw new Error ("no book found for id:" + bookid);
+  } catch (e) {
+    console.log(e.message);
+    throw e;
+  }
+};
+const data = { bookid: "64a513f244a8b115b49c6e8a", quantity: 2 };
 //   update_cart_quantity("64a4ef061ac5ca513ce09d04" , data)
 
-  const delete_book_from_cart = async (userid, bookid) => {
-    try {
-      const res = await CartDb.remove_book_from_cart(userid, bookid);
-      if (res) {
-        console.log("removed book from cart successfully");
-        return "removed book from cart successfully"
-      }
-      console.log("no book or user on this id :" + bookid +" "+ userid);
-    } catch (e) {
-      console.log(e.message);
-      throw e
+const delete_book_from_cart = async (userid, bookid) => {
+  try {
+    const res = await CartDb.remove_book_from_cart(userid, bookid);
+    if (res) {
+      console.log("removed book from cart successfully");
+      return "removed book from cart successfully";
     }
-  };
+    console.log("no book or user on this id :" + bookid + " " + userid);
+  } catch (e) {
+    console.log(e.message);
+    throw e;
+  }
+};
 //   delete_book_from_cart("64a4ef061ac5ca513ce09d04" , "64a51471b7c9070a2ebc1b7f")
 
-  module.exports = {}
+module.exports = {
+  addto_cart,
+  update_cart_quantity,
+  delete_book_from_cart,
+  get_cart_by_id,
+};

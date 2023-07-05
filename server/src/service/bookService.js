@@ -1,6 +1,42 @@
 const BookDb = require("../database/bookDb");
 const Schema = require("../models/bookModel");
 
+
+
+
+const get_all_books = async () =>{
+    try {
+      const books = await BookDb.get_books_data()
+      if (books.length > 0) {
+        // console.log(products);
+        return books
+         
+       }else{
+        return ({
+          'message': 'no product found'
+        })
+       }
+    } catch (error) {
+      
+    }
+  }
+  get_all_books()
+  
+  const get_book_id = async (id) =>{
+    try{
+      const books = await BookDb.get_book_by_id(id)
+      if(books){
+        return books
+      }
+      return ({
+        'message': 'no product found'
+      })
+    }catch(err){
+      
+    }
+  }
+  
+
 const search_books = async (keyword) => {
   try {
     const result = await BookDb.find_books_from_data(keyword);
@@ -70,4 +106,4 @@ const update_book = async(bookid , bookinfo) => {
   const pro = {price: 3000, quantity: 12};
 //   update_book("64a51471b7c9070a2ebc1b7f", pro)
 
-module.exports = {}
+module.exports = {update_book, remove_book,add_books,search_books , get_all_books , get_book_id}
