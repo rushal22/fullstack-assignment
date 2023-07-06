@@ -1,11 +1,11 @@
 const CartService = require('../service/cartService')
-// const user = require('../data/users')
+
 
 
 const get_user_cart = async (req, res) =>{
     try {
         const userid = req.params.id
-        // console.log(cartid);
+        
         const carts = await CartService.get_cart_by_id(userid)
         console.log(carts);
         res.status(200).json(carts)
@@ -16,14 +16,12 @@ const get_user_cart = async (req, res) =>{
     }
 }
 
-
 const add_cart = async (req, res) =>{
     try{
         const userid = req.params.userid;
         const books = req.body;
-        console.log(userid)
-        console.log(books);
-        const result = await CartService.addto_cart(userid , {bookid: books.bookid , quantity : books.quantity});
+        console.log(books , userid);
+        const result = await CartService.addto_cart(userid, books);
         res.status(200).send(result)
     }catch(err){
         res.status(400).send(err.message);

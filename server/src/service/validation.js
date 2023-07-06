@@ -11,6 +11,6 @@ const user_validation = (firstName, lastName, email, password, contact) => {
     contact: joi.number(),
   });
 
-  return validation_rule.validate(firstName, lastName, email, password, contact);
+  return validation_rule.validate({firstName, lastName, email, password, contact});
 };
 module.exports = {user_validation}

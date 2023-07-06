@@ -7,5 +7,17 @@
     "joi": "^17.9.2",
     "mongodb": "^5.6.0",
     "nodemon": "^2.0.22"
-  }
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

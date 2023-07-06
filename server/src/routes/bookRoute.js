@@ -7,9 +7,9 @@ router.get('/', (req, res) =>{
 })
 
 router.post("/book/addbooks", book.add_book)
-router.delete("/book/removeproduct/:id",book.remove_book)
-router.put("/book/updateproduct/:id" ,book.update_book )
-router.get("/book/searchproduct/:keyword", book.search_books)
+router.delete("/book/removebook/:id",book.remove_book)
+router.put("/book/updatebook/:id" ,book.update_book )
+router.get("/book/searchbook/:keyword", book.search_books)
 router.get('/book', book.all_books)
 router.get('/book/:id', book.get_book_by_id)
 

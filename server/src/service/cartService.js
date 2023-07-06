@@ -3,8 +3,6 @@ const UserDb = require("../database/userDb");
 const BookDb = require("../database/bookDb");
 const Schema = require("../models/cartModel");
 
-
-
 const get_cart_by_id = async (id) => {
   try {
     const carts = await CartDb.get_active_cart_data(id);
@@ -22,64 +20,49 @@ const get_cart_by_id = async (id) => {
 
 const addto_cart = async (Userid, newBook) => {
   try {
-    //assuming customer already have cart created
-    // console.log(newBook);
     const user_res = await UserDb.get_user_by_id(Userid);
     if (!user_res) {
       throw new Error("no user found for id :" + Userid);
     }
-    const book_res = await BookDb.get_book_by_id(newBook.Bookid);
 
+    const book_res = await BookDb.get_book_by_id(newBook.bookid);
     if (!book_res) {
-      throw new Error("no book found for thid id :" + newBook.Bookid);
+      throw new Error("no book found for thid id :" + newBook.bookid);
     }
     const Cart = await CartDb.get_active_cart_data(Userid);
+    console.log(Cart);
     if (Cart) {
-      for (let book of Cart.Books) {
-        if (newBook.Bookid === book.id) {
-          book.quantity += newBook.quantity;
+      const existingBookIndex = Cart.Books.findIndex((book)=> book.id == newBook.bookid)
+      console.log(existingBookIndex);
+      if (existingBookIndex !== -1){
+        Cart.Books[existingBookIndex].quantity += newBook.quantity
+      }else{
+        Cart["Books"].push({
+          id: newBook["bookid"],
+          quantity: newBook["quantity"],
+        });
+      }
           if (await CartDb.update_cart_data(Cart)) {
-            console.log("quantity added to cart");
             return "quantity added to cart";
           }
           throw new Error("error occur while adding data on cart ");
-        }
       }
-      Cart["Books"].push({
-        id: newBook["Bookid"],
-        quantity: newBook["quantity"],
-      });
-      if (await CartDb.update_cart_data(Cart)) {
-        console.log("data added to cart");
-        return "data added to cart";
-      }
-      throw new Error("error occur while adding data on cart");
-    }
-
-    const new_cart = Schema.cart_schema(Userid);
-
-    new_cart["Books"].push({
-      id: newBook["Bookid"],
-      quantity: newBook["quantity"],
-    });
-
+    const new_cart = Schema.cart_schema(Userid, newBook);
     if (await CartDb.add_to_cart(new_cart)) {
-      console.log("data added to cart");
       return "data added to cart";
     } else {
       throw new Error("error Occured");
     }
   } catch (e) {
-    console.log(e.message);
     throw e;
   }
 };
 const cart_info = {
-  Bookid: "64a513f244a8b115b49c6e8a",
+  Bookid: "64a51442d1f4500259330473",
   quantity: 2,
 };
 
-addto_cart("64a4ef061ac5ca513ce09d04", cart_info);
+// addto_cart("64a58d6fc83ef8175f46c2c3", cart_info);
 
 const update_cart_quantity = async (userid, data) => {
   try {

@@ -9,8 +9,8 @@ const Validate = require('../service/validation.js')
         password,
         contact
       );
-      // console.log("value" , value);
-      // console.log(error);
+      console.log("value" , value);
+      console.log(error);
     if(error) {
     throw error
     }
@@ -18,12 +18,5 @@ const Validate = require('../service/validation.js')
       ...value, 
       password: Bcrypt.hashSync(value.password , Bcrypt.genSaltSync(10)),
     }
-    // return {
-    //     firstName: value.firstName,
-    //     lastName: value.lastName,
-    //     email: value.email,
-    //     password: Bcrypt.hashSync(value.password , Bcrypt.genSaltSync(10)),
-    //     contact: value.contact,
-    //   };
    }
       module.exports = {user_model}

@@ -76,8 +76,9 @@ async function update_book_from_data(id, bookinfo) {
 async function get_book_by_id(id) {
     try {
       let con = await db_connect("books");
-      let book = await con.findOne({ _id: new mongodb.ObjectId(id)});
-      if (book) {
+      let book = await con.findOne({_id: new mongodb.ObjectId(id)});
+      
+      if(book) {
         return book;
       }
       throw new Error("no book found for this id")
@@ -111,21 +112,9 @@ async function get_book_by_id(id) {
       throw e
     }
   }
-    async function update_increase_quantity(id, quantity) {
-      try{
-        let con = await db_connect("books");
-        let book = await con.findOne({_id : new mongodb.ObjectId(id)});
-        if(book){
-          let res = await con.updateOne({_id : new mongodb.ObjectId(id)},{$set:{Quantity:(book.quantity + quantity)}});
-          return res.acknowledged
-        }
-        throw new Error ("no book found for id:" + id);
-      }catch(e){
-        throw e
-      }
-    }
   
-
+  
+  
 module.exports = {
   get_books_data,
   find_books_from_data,
@@ -135,5 +124,4 @@ module.exports = {
   get_book_by_id,
   checking_book,
   update_decrease_quantity,
-  update_increase_quantity
 };

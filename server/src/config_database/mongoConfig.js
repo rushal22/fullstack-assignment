@@ -2,9 +2,9 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 
 
-// const url = process.env.MONGO_URL;
+const url = process.env.MONGO_URL;
 // console.log(url);
-const url = 'mongodb://localhost:27017'
+// const url = 'mongodb://localhost:27017'
 const client = new MongoClient(url);
 const database = "Ecommerce_books";
 const db_connect = async (collection) => {
