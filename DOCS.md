@@ -10,7 +10,13 @@
 6. Used REST API.   
 7. Used nodemon for command run tool
 
+
+
+## To seed Books data:
+npm run seed
+
 ## To run locally in backend:
+
 npm start
 or 
 npm run start
