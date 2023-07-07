@@ -34,7 +34,6 @@ async function find_user_from_login_details(email, password) {
   try {
     let con = await db_connect("users");
     let user = await con.findOne({ email: email });
-    //  console.log(user);
     if (user) {
       if (Bcrypt.compareSync(password, user.password)) {
         return user;
@@ -49,7 +48,7 @@ async function find_user_from_login_details(email, password) {
 async function get_user_by_id(id) {
   try {
     let con = await db_connect("users");
-    let user = await con.findOne({ _id: new mongodb.ObjectId(id)});
+    let user = await con.findOne({ _id: new mongodb.ObjectId(id) });
     if (user) {
       return user;
     }

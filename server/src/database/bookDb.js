@@ -4,7 +4,7 @@ const mongodb = require("mongodb");
 async function get_books_data() {
   let con = await db_connect("books");
   let data = await con.find().toArray();
-  // console.log(data);
+
   return data;
 }
 
@@ -60,7 +60,6 @@ async function update_book_from_data(id, bookinfo) {
     let con = await db_connect("books");
     let book = await con.findOne({ _id: new mongodb.ObjectId(id) });
     if (book) {
-    //   console.log(bookinfo);
       let res = await con.updateOne(
         { _id: new mongodb.ObjectId(id) },
         { $set: bookinfo }
@@ -74,47 +73,48 @@ async function update_book_from_data(id, bookinfo) {
 }
 
 async function get_book_by_id(id) {
-    try {
-      let con = await db_connect("books");
-      let book = await con.findOne({_id: new mongodb.ObjectId(id)});
-      
-      if(book) {
-        return book;
-      }
-      throw new Error("no book found for this id")
-    } catch (e) {
-      throw e;
-    }
-  }
+  try {
+    let con = await db_connect("books");
+    let book = await con.findOne({ _id: new mongodb.ObjectId(id) });
 
-  async function checking_book(bookid){
-    try {
-      let db = await db_connect("books");
-      const book = await db.findOne({_id : new mongodb.ObjectId(bookid)})
-        if(book){
-          return book
-        }
-      throw new Error("no book found for id:" + bookid);
-    } catch (e) {
-      throw e;
+    if (book) {
+      return book;
     }
-  };
-  async function update_decrease_quantity(id, quantity) {
-    try{
-      let con = await db_connect("books");
-      let book = await con.findOne({_id : new mongodb.ObjectId(id)});
-      if(book){
-        let res = await con.updateOne({_id : new mongodb.ObjectId(id)},{$set:{quantity:(book.quantity - quantity)}});
-        return res.acknowledged
-      }
-      throw new Error ("no book found for id:" + id);
-    }catch(e){
-      throw e
-    }
+    throw new Error("no book found for this id");
+  } catch (e) {
+    throw e;
   }
-  
-  
-  
+}
+
+async function checking_book(bookid) {
+  try {
+    let db = await db_connect("books");
+    const book = await db.findOne({ _id: new mongodb.ObjectId(bookid) });
+    if (book) {
+      return book;
+    }
+    throw new Error("no book found for id:" + bookid);
+  } catch (e) {
+    throw e;
+  }
+}
+async function update_decrease_quantity(id, quantity) {
+  try {
+    let con = await db_connect("books");
+    let book = await con.findOne({ _id: new mongodb.ObjectId(id) });
+    if (book) {
+      let res = await con.updateOne(
+        { _id: new mongodb.ObjectId(id) },
+        { $set: { quantity: book.quantity - quantity } }
+      );
+      return res.acknowledged;
+    }
+    throw new Error("no book found for id:" + id);
+  } catch (e) {
+    throw e;
+  }
+}
+
 module.exports = {
   get_books_data,
   find_books_from_data,

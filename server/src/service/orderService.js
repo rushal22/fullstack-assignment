@@ -49,11 +49,8 @@ const place_order = async (user_id, shipementAddress, Payment) => {
 
     const placeOrder = await OrderDb.add_order(new_order);
     if (placeOrder.acknowledged) {
-      // console.log(placeOrder);
       const deactivateCart = await CartDb.deactive_cart(user_id);
       if (deactivateCart) {
-        //   console.log(deactivateCart);
-        console.log("Order placed successfully");
         return {
           message: "Order placed successfully",
           orderid: placeOrder.insertedId,
@@ -63,7 +60,6 @@ const place_order = async (user_id, shipementAddress, Payment) => {
     }
     throw new Error("error occured");
   } catch (err) {
-    console.log(err.message);
     throw err;
   }
 };
@@ -74,15 +70,10 @@ const shipments = {
 };
 const address = { country: "Nepal", city: "Ktm", ...shipments };
 const Pay = { type: "Khalti", status: "Paid" };
-//   place_order("64a4ef061ac5ca513ce09d04" ,address, Pay)
-
 
 const update_shipment_status = async (order_id, Status) => {
   try {
     const order = await OrderDb.get_order_by_id(order_id);
-    //   if (order.orderStatus === "canceled" || order.orderStatus === "returned") {
-    //     throw new Error("order has already been " + order.orderStatus);
-    //   }
     if (order) {
       order.shipementAddress.status = Status;
       switch (Status) {
@@ -102,32 +93,28 @@ const update_shipment_status = async (order_id, Status) => {
           throw new Error("provide valid status");
       }
       if (await OrderDb.update_order(order_id, order)) {
-        console.log("shipment status updated");
         return "shipment status updated";
       }
       throw new Error("error updating order");
     }
     throw new Error("no order found");
   } catch (err) {
-    console.log(err.message);
     throw err;
   }
 };
-//   update_shipment_status("64a543640248c43671a350a6" , "awaiting")
+
 
 const track_order = async (orderid) => {
   try {
     const order = await OrderDb.get_order_by_id(orderid);
     if (order) {
-      console.log(order);
       return order;
     }
     throw new Error("no order found for this id:" + orderid);
   } catch (e) {
-    console.log(e.message);
     throw e;
   }
 };
-// track_order("64a543640248c43671a350a6");
+
 
 module.exports = {get_user_orders , place_order, update_shipment_status, track_order}

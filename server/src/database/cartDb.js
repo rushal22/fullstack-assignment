@@ -79,14 +79,12 @@ async function get_cart_data (){
     try {
       let con = await db_connect("carts");
       let cart = await con.findOne({UserId :userid , status : "active"});
-    //   console.log(cart._id);
       if(cart) {
         let i = 0
         for(var book of cart.Books) {
           if (book.id === bookid) {
             cart.Books.splice(i,1)
             let res = await con.updateOne({_id: cart._id}, {$set : cart})
-            // console.log(res);
             return res.acknowledged;
           }
           i += 1
