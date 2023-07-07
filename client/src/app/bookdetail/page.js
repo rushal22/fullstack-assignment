@@ -28,7 +28,7 @@ function bookdetail() {
 
           <Image
             className={img ? "cursor-pointer" : "cursor-progress"}
-            src={book?.image}
+            src={`http://localhost:8000/${book?.image}`}
             alt="Picture of the Book"
             width={200}
             height={400}

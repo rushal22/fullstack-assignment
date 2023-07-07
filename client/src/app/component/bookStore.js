@@ -32,7 +32,7 @@ function BookStore() {
               >
                 <Image
                   className={img ? "cursor-pointer" : "cursor-progress"}
-                  src=""
+                  src={`http://localhost:8000/${book?.image}`}
                   alt="Picture of the Book"
                   width={200}
                   height={400}

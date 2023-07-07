@@ -15,6 +15,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.static("public"))
 app.use("/api", userRouter);
 app.use("/api", bookRouter);
 app.use("/api", cartRouter);
