@@ -17,9 +17,12 @@ npm run start
 
 ## Technologies used for frontend:
 1. Installed React Next.js for the frontend.
-2. 
- 
+2. Used Tailwind CSS.
+ remaining to add redux.
+ need to maintain css properly
 
 ## To run locally in frontend:
 
 npm run dev
+
+--<The frontend session is not fully completed due to not including redux>--

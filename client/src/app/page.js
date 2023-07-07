@@ -1,16 +1,12 @@
-'use client'
-import BookStore from './component/bookStore';
-import Navbar from './layout/navbar';
-import {UserProvider} from '../userContext'
+"use client";
+import BookStore from "./component/bookStore";
+import Navbar from "./layout/navbar";
 function Home() {
-  
   return (
-    <UserProvider>
+    <div>
       <Navbar />
       <BookStore />
-      
-     </UserProvider>
-  
+    </div>
   );
 }
 

@@ -13,7 +13,7 @@ const get_all_books = async () => {
     }
   } catch (error) {}
 };
-get_all_books();
+
 
 const get_book_id = async (id) => {
   try {
@@ -39,6 +39,7 @@ const search_books = async (keyword) => {
     throw err;
   }
 };
+search_books("s")
 
 const add_books = async (title, author, isbn, price, quantity) => {
   try {
